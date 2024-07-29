@@ -1,18 +1,17 @@
-from telegram import Update
-from telegram.ext import Updater, CommandHandler, CallbackContext
+import telebot
 import os
 
-TOKEN = os.getenv('7240803057:AAHg-vv5-OYhosfjdRwsIuF93D6wtPUAlBo')
+# Убедитесь, что вы получаете токен из переменных окружения или замените его своим токеном
+TOKEN = os.getenv('TELEGRAM_TOKEN', '7240803057:AAG7xMLwBKljEiRpjN7EYEVfANX9BGthUCI')
 
-def start(update: Update, context: CallbackContext) -> None:
-    update.message.reply_text('Hello!')
+bot = telebot.TeleBot(TOKEN)
+
+@bot.message_handler(commands=['start'])
+def start(message):
+    bot.reply_to(message, 'Hello!')
 
 def main():
-    updater = Updater(TOKEN)
-    dispatcher = updater.dispatcher
-    dispatcher.add_handler(CommandHandler("start", start))
-    updater.start_polling()
-    updater.idle()
+    bot.polling()
 
-if __name__ == '__main__':
+if name == 'main':
     main()
