@@ -1,7 +1,7 @@
 import telebot
 from telebot import types
 
-API_TOKEN = 'YOUR_API_TOKEN'
+API_TOKEN = '7240803057:AAG7xMLwBKljEiRpjN7EYEVfANX9BGthUCI'
 OWNER_CHAT_ID = '1420106372'  # Замените это на ID чата владельца
 
 bot = telebot.TeleBot(API_TOKEN)
