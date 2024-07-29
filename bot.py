@@ -2,7 +2,8 @@ import telebot
 import os
 
 # Убедитесь, что вы получаете токен из переменных окружения или замените его своим токеном
-TOKEN = os.getenv('TELEGRAM_TOKEN', '7240803057:AAG7xMLwBKljEiRpjN7EYEVfANX9BGthUCI')
+TOKEN = os.getenv( 
+'7240803057:AAG7xMLwBKljEiRpjN7EYEVfANX9BGthUCI')
 
 bot = telebot.TeleBot(TOKEN)
 
