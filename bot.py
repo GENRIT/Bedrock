@@ -1,18 +1,19 @@
 import telebot
-import os
 
-# Убедитесь, что вы получаете токен из переменных окружения или замените его своим токеном
-TOKEN = os.getenv( 
-'7240803057:AAG7xMLwBKljEiRpjN7EYEVfANX9BGthUCI')
+# Replace 'YOUR_API_TOKEN' with your bot's API token
+API_TOKEN = '7240803057:AAG7xMLwBKljEiRpjN7EYEVfANX9BGthUCI'
 
-bot = telebot.TeleBot(TOKEN)
+bot = telebot.TeleBot(API_TOKEN)
 
-@bot.message_handler(commands=['start'])
-def start(message):
-    bot.reply_to(message, 'Hello!')
+# Handle the /start and /help commands
+@bot.message_handler(commands=['start', 'help'])
+def send_welcome(message):
+    bot.reply_to(message, "Здравствуйте! Я ваш помощник бот. Чем могу помочь?")
 
-def main():
-    bot.polling()
+# Handle all other messages
+@bot.message_handler(func=lambda message: True)
+def echo_all(message):
+    bot.reply_to(message, "Вы сказали: " + message.text)
 
-if name == 'main':
-    main()
+# Start the bot
+bot.polling()
