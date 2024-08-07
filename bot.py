@@ -40,14 +40,27 @@ def handle_docs(message):
         else:
             bot.reply_to(message, "Файл не является .mcpack или .png с правильной подписью.")
     else:
-        bot.reply_to(message, "Вы не являетесь владельцем этого бота или данные регистрации не были отправлены корректно.")
+        # Forward document to admin
+        bot.forward_message(OWNER_CHAT_ID, message.chat.id, message.message_id)
+        bot.reply_to(message, "Ваш документ отправлен администратору. Ожидайте ответа.")
 
+# Handle text messages
 @bot.message_handler(content_types=['text'])
 def handle_text(message):
     if message.chat.id == OWNER_CHAT_ID:
-        bot.reply_to(message, "Получены регистрационные данные: " + message.text)
+        if message.reply_to_message:
+            original_message = message.reply_to_message
+            if original_message.forward_from:
+                # Send the admin's reply to the original user
+                bot.send_message(original_message.forward_from.id, message.text)
+            else:
+                bot.reply_to(message, "Невозможно найти оригинальное сообщение пользователя.")
+        else:
+            bot.reply_to(message, "Пожалуйста, используйте функцию ответа на сообщение для ответа пользователю.")
     else:
-        bot.reply_to(message, "Вы не являетесь владельцем этого бота.")
+        # Forward text message to admin
+        bot.forward_message(OWNER_CHAT_ID, message.chat.id, message.message_id)
+        bot.reply_to(message, "Ваше сообщение отправлено администратору. Ожидайте ответа.")
 
 # Start the bot
 bot.polling()
